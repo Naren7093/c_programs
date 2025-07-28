@@ -5,7 +5,7 @@ int main()
 	int k,l,m;
 	for(k=6;k>=1;k--)
 	{
-		for(l=1;l<=k-1;l++)
+		for(l=1;l<=6-k;l++)
 		{
 			printf(" ");
 		}
