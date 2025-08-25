@@ -12,7 +12,13 @@ int main(){
 	sum=(*ptr1)+(*ptr2);
         diff=(*ptr1)-(*ptr2);
         mul=(*ptr1)*(*ptr2);
+	 if (*ptr2 != 0)
+        div = (*ptr1) / (*ptr2);
+        else {
+        printf("Division by zero not allowed.\n");
+        div = 0;
         div=(*ptr1)/(*ptr2);
+	}
 	printf("Sum is:%f\n",sum);
 	printf("Difference is:%f\n",diff);
 	printf("Multipilication is:%f\n",mul);
