@@ -5,7 +5,7 @@ int main(){
 	scanf("%d",&limit);
 	
 	printf("Prime numbers are in range of %d \n",limit);
-	for(i=1;i<=limit;i++){
+	for(i=2;i<=limit;i++){
 		flag=1;
 		for(j=2;j<i/2;j++){
 
