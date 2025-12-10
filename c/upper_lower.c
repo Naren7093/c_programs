@@ -15,7 +15,7 @@ int main() {
         }
     }
 
-    printf("\n\nEnter an upper string: ");
+    printf("\nEnter an upper string: ");
     scanf("%s", ch2);
 
     printf("LOWER: ");

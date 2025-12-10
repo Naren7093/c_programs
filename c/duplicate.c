@@ -27,7 +27,7 @@ int main(){
 	if(!found){
 		printf("None");
 	}
-	printf("\nAfter removing duplicatevelements\n");
+	printf("\nAfter removing duplicate elements\n");
 	for(i=0;i<n;i++){
 		printf("%d ",a[i]);
 	}

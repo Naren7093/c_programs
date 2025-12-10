@@ -1,9 +1,9 @@
 #include<stdio.h>
 #include<string.h>
 
-void strcopy(char dst[],char s[]){
+void strcopy(char dst[],char s[],int n){
 	int i;
-	for(i=0;s[i]!='\0';i++){
+	for(i = 0; i < n && s[i]!='\0';i++){
 		dst[i]=s[i];
 	}
 		dst[i]='\0';
@@ -16,7 +16,10 @@ int main(){
 	s[strcspn(s,"\n")]='\0';
 
 	char dst[30];
-	strcopy(dst,s);
+	int n;
+	printf("Enter n:");
+	scanf("%d",&n);
+	strcopy(dst,s,n);
 	printf(" copied %s to destination\n",dst);
 	return 0;
 }

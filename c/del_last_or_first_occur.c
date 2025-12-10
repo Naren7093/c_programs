@@ -15,7 +15,7 @@ int main(){
 	for(int i=0;i<len;i++){
 		if(str[i]==ch){
 			index=i;
-			//break;
+			break;
 
 		}
 	}

@@ -4,6 +4,7 @@ int main(){
 	char str[20];
 	int vowel=0;
 	int consonant=0;
+	int count=0;
 	printf("enter a string:");
 	fgets(str,sizeof(str),stdin);
 	str[strcspn(str,"\n")]='\0';
@@ -17,8 +18,10 @@ int main(){
        		printf("consonant:%c ->ASCII:%d \n",str[i],str[i]);
 		consonant++;
 		}
+		count++;
 	}
-
+	
+	printf("\nTotal count:%d",count);
 	printf("\nVowels in string :%d\n",vowel);
 	printf("consonants in string :%d\n",consonant);
 	
