@@ -10,3 +10,6 @@ I am currently analyzing the RTC code at a core level, understanding what happen
 
 February 2:
 I analyzed the datasheets of DHT11, MQ135, RTC (DS1307), and the QCC74x board and interfaced all sensors successfully. The temperature, humidity, air quality, and RTC data were transmitted via UART-TTL and displayed correctly on Minicom.
+
+February 3:
+I interfaced the DHT11 sensor with an OLED display on the QCC74x board. Temperature and humidity values were read correctly and displayed successfully on the OLED. Previously, I had interfaced DHT11, MQ135, and DS1307, and verified their outputs via UART-TTL on Minicom.
