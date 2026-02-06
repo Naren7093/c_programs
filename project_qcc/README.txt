@@ -16,3 +16,6 @@ I interfaced the DHT11 sensor with an OLED display on the QCC74x board. Temperat
 
 February 4:
 Today, I focused entirely on board-to-board communication via SPI, but I couldn’t get the expected results.
+
+February 6:
+Configured GPIO0 on the QCC74x board using direct register-level programming and set it to SWGPIO output mode. Verified the configuration by blinking an LED through manual bit manipulation and software delay loops.
