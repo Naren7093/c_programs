@@ -1,18 +1,16 @@
 #include <stdio.h>
 
-
 int multiply(int a, int b) {
     int result = 0;
     while (b > 0) {
         if (b & 1) {
-            result = result + a;
+             result = result + a;
         }
-        a = a << 1;  
-        b = b >> 1;  
+        a = a << 1;
+        b = b >> 1;
     }
     return result;
 }
-
 int main() {
     int n, i, fact = 1;
 
