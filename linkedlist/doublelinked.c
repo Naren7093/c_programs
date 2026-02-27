@@ -3,138 +3,149 @@
 
 struct node{
     int data;
-    struct node*prev;
     struct node*next;
+    struct node*prev;
 };
 
-void print_list(struct node* head, char *msg){
-    printf("\n%s\n", msg);
-
-    struct node* ptr=head;
-
+void print_list(struct node*head,char*msg){
+    printf("\n%s",msg);
+    struct node*ptr=head;
     if(ptr==NULL){
-        printf("List is Empty\n");
+        printf("List is empty\n");
         return;
     }
-
     while(ptr!=NULL){
         printf("%d->",ptr->data);
         ptr=ptr->next;
     }
     printf("NULL\n");
+    printf("\n");
 }
-
-struct node*add_at_empty(struct node*head,int data){
+    
+struct node*add_at_beg(struct node*head,int data1){
     struct node*temp=malloc(sizeof(struct node));
-    temp->prev=NULL;
-    temp->data=data;
-    temp->next=NULL;
-    return temp;
-}
-
-struct node*add_at_beg(struct node*head,int data){
-    struct node*tmp=malloc(sizeof(struct node));
-    tmp->data=data;
-    tmp->prev=NULL;
-    tmp->next=head;
-
-    if(head!=NULL)
-        head->prev=tmp;
-
-    return tmp;
-}
-
-struct node*add_at_end(struct node*head,int data){
-    struct node*t1=malloc(sizeof(struct node));
-    t1->data=data;
-    t1->next=NULL;
-
-    if(head==NULL){
-        t1->prev=NULL;
-        return t1;
+    if(temp==NULL){
+        printf("Memory allocation failed\n");
+        return head;
     }
+    
+    temp->data=data1;
+    temp->prev=NULL;
+    temp->next=head;
+    
+    if(head!=NULL){
+        head->prev=temp;
+    }
+    return temp;
+}    
 
-    struct node*tp=head;
-    while(tp->next!=NULL)
-        tp=tp->next;
-
-    tp->next=t1;
-    t1->prev=tp;
+struct node*add_at_end(struct node*head,int data2){
+    struct node*end=malloc(sizeof(struct node));
+    if(end==NULL){
+        printf("Memory allocation failed\n");
+        return head;
+    }
+    end->data=data2;
+    end->prev=NULL;
+    end->next=NULL;
+    
+    if(head==NULL){
+        return end;
+    }
+    struct node*ptr=head;
+    while(ptr->next!=NULL){
+        ptr=ptr->next;
+    }
+    ptr->next=end;
+    end->prev=ptr;
     return head;
 }
 
-struct node*add_at_pos(struct node*head,int data,int pos){
-    if(pos==1)
-        return add_at_beg(head,data);
-
-    struct node*new=malloc(sizeof(struct node));
-    new->data=data;
-    new->next=NULL;
-
-    struct node*t1=head;
-    struct node*t2=NULL;
-
-    while(pos!=2 && t1->next!=NULL){
-        t1=t1->next;
-        pos--;
+struct node*add_at_pos(struct node*head,int pos1,int data3){
+    if(pos1==1){
+        return add_at_beg(head,data3);
     }
 
-    if(t1->next==NULL){
-        t1->next=new;
-        new->prev=t1;
+    struct node*ptr=head;
+    pos1--;
+
+    while(pos1!=1 && ptr!=NULL){
+        ptr=ptr->next;
+        pos1--;
+    }
+
+    if(ptr==NULL){
+        printf("Invalid position\n");
+        return head;
+    }
+
+    struct node*pos=malloc(sizeof(struct node));
+    if(pos==NULL){
+        printf("Memory allocation failed\n");
+        return head;
+    }
+
+    pos->data=data3;
+
+    if(ptr->next==NULL){
+        ptr->next=pos;
+        pos->prev=ptr;
+        pos->next=NULL;
     }
     else{
-        t2=t1->next;
-        t1->next=new;
-        t2->prev=new;
-        new->prev=t1;
-        new->next=t2;
+        struct node*ptr2=ptr->next;
+        ptr->next=pos;
+        pos->prev=ptr;
+        pos->next=ptr2;
+        ptr2->prev=pos;
     }
     return head;
 }
 
 struct node*del_at_beg(struct node*head){
-    if(head==NULL)
-        return NULL;
-
-    struct node*del=head;
+    if(head==NULL){
+        printf("List is empty\n");
+        return head;
+    }
+    struct node*beg=head;
     head=head->next;
-
-    if(head!=NULL)
+    if(head!=NULL){
         head->prev=NULL;
-
-    free(del);
+    }
+    free(beg);
     return head;
 }
 
 struct node*del_at_end(struct node*head){
     if(head==NULL){
-        printf("Empty list\n");
-        return  head;
-    }    
+        printf("List is empty\n");
+        return head;
+    }
     else if(head->next==NULL){
         free(head);
         head=NULL;
-        return head;
     }
-    struct node*end1=head;
-    struct node*end2=head;
-    while(end1->next!=NULL){
-        end2=end1;
-        end1=end1->next;
+    else{
+        struct node*prev=head;
+        struct node*after=head;
+    
+        while(after->next!=NULL){
+            prev=after;
+            after=after->next;
+        }
+        prev->next=NULL;
+        free(after);
     }
-    end2->next=NULL;
-    free(end1);
     return head;
 }
 
-struct node*del_at_pos(struct node*head,int pos1){
+struct node*del_at_pos(struct node*head,int pos2){
     if(head==NULL){
         printf("List is Empty\n");
         return head;
     }
     struct node*t1=head;
-     if (pos1==1){
+     if (pos2==1){
          head=t1->next;
          if(head!=NULL){
              head->prev=NULL;
@@ -142,11 +153,11 @@ struct node*del_at_pos(struct node*head,int pos1){
          free(t1);
          return head;
     }
-    while(pos1 > 1 && t1->next!=NULL){
+    while(pos2 > 1 && t1->next!=NULL){
         t1=t1->next;
-        pos1--;
+        pos2--;
     }
-    if(pos1 > 1){
+    if(pos2 > 1){
         printf("Invalid position\n");
         return head;
     }
@@ -182,51 +193,58 @@ struct node*rev(struct node*head){
 }
 
 int main(){
-
     struct node*head=NULL;
 
-    head=add_at_empty(head,1);
-    print_list(head,"Initial List");
-
-    head=add_at_beg(head,0);
-    print_list(head,"After add_at_beg");
-
-    head=add_at_end(head,2);
-    head=add_at_end(head,4);
-    head=add_at_end(head,5);
-    print_list(head,"After add_at_end");
-
-    int n,data,pos;
-
-    printf("\nHow many nodes to insert at position: ");
-    scanf("%d",&n);
-
-    for(int i=0;i<n;i++){
-        printf("Enter data: ");
-        scanf("%d",&data);
-
-        printf("Enter position: ");
-        scanf("%d",&pos);
-
-        head=add_at_pos(head,data,pos);
+    print_list(head,"Initial list\n");
+    
+    int n1,data1;
+    printf("How many nodes to add at beggining:");
+    scanf("%d",&n1);
+    for(int i=1;i<=n1;i++){
+        printf("Enter data:");
+        scanf("%d",&data1);
+        head=add_at_beg(head,data1);
     }
-
-    print_list(head,"After add_at_pos");
+    print_list(head,"After add at beggining\n");
+    
+    int n2,data2;
+    printf("How many nodes to be add at end:");
+    scanf("%d",&n2);
+    for(int i=1;i<=n2;i++){
+        printf("Enter data:");
+        scanf("%d",&data2);
+        head=add_at_end(head,data2);
+    }
+    print_list(head,"After add at end\n");
+    
+    int n3,pos1,data3;
+    printf("How many nodes to be add at position:");
+    scanf("%d",&n3);
+    for(int i=1;i<=n3;i++){
+        printf("Enter data:");
+        scanf("%d",&data3);
+        
+        printf("Enter pos:");
+        scanf("%d",&pos1);
+        
+        head=add_at_pos(head,pos1,data3);
+    }
+    print_list(head,"After add at position\n");
     
     head=del_at_beg(head);
-    print_list(head,"After del_at_beg");
-    
     head=del_at_end(head);
-    print_list(head,"After del_at_end");
+    print_list(head,"After del at end\n");
     
-    int pos1;
-    printf("Enter pos to delete:");
-    scanf("%d",&pos1);
-    head=del_at_pos(head,pos1);
-    print_list(head,"After del_at_pos");
+    int n4,pos2;
+    printf("How many nodes to delete:");
+    scanf("%d",&n4);
+    for(int i=1;i<=n4;i++){
+        printf("Enter pos:");
+        scanf("%d",&pos2);
+        head=del_at_pos(head,pos2);
+    }
+    print_list(head,"After delete at position\n");
     
     head=rev(head);
-    print_list(head,"After reverse");
-    return 0;
+    print_list(head,"After reverse\n");
 }
-
