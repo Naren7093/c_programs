@@ -3,108 +3,134 @@
 
 struct node{
     int data;
-    struct node*next;
+    struct node *next;
 };
 
-int count_nodes(struct node*tail){
-    if(tail==NULL)
+int count_nodes(struct node *tail){
+    if(tail==NULL){
         return 0;
+    }
 
     int count=0;
-    struct node*p=tail->next;
+    struct node *p=tail->next;
 
-    do{
+    while(1){
         count++;
         p=p->next;
-    }while(p!=tail->next);
+
+        if(p==tail->next){
+            break;
+        }
+    }
 
     return count;
 }
 
-void search(struct node*tail,int key){
+void search(struct node *tail,int key){
     if(tail==NULL){
         printf("List empty\n");
         return;
     }
 
-    struct node*p=tail->next;
+    struct node *p=tail->next;
     int pos=1;
 
-    do{
+    while(1){
         if(p->data==key){
             printf("Element %d found at position %d\n",key,pos);
             return;
         }
+
         p=p->next;
         pos++;
-    }while(p!=tail->next);
+
+        if(p==tail->next){
+            break;
+        }
+    }
 
     printf("Element not found\n");
 }
 
-struct node*add_to_empty(int data){
-    struct node*temp=malloc(sizeof(struct node));
+struct node* add_to_empty(int data){
+    struct node *temp=malloc(sizeof(struct node));
+
     temp->data=data;
     temp->next=temp;
+
     return temp;
 }
 
-struct node*add_at_beg(struct node*tail,int data){
-    if(tail==NULL)
+struct node* add_at_beg(struct node *tail,int data){
+    if(tail==NULL){
         return add_to_empty(data);
+    }
 
-    struct node*new=malloc(sizeof(struct node));
+    struct node *new=malloc(sizeof(struct node));
+
     new->data=data;
     new->next=tail->next;
+
     tail->next=new;
 
     return tail;
 }
 
-struct node*add_at_end(struct node*tail,int data){
-    if(tail==NULL)
+struct node* add_at_end(struct node *tail,int data){
+    if(tail==NULL){
         return add_to_empty(data);
+    }
 
-    struct node*new=malloc(sizeof(struct node));
+    struct node *new=malloc(sizeof(struct node));
+
     new->data=data;
     new->next=tail->next;
+
     tail->next=new;
 
-    return new;
+    tail=tail->next;
+
+    return tail;
 }
 
-struct node*add_at_afterpos(struct node*tail,int pos,int data){
-    if(tail==NULL)
+struct node* add_at_afterpos(struct node *tail,int pos,int data){
+    if(tail==NULL){
         return add_to_empty(data);
+    }
 
-    struct node*p=tail->next;
+    struct node *p=tail->next;
 
     while(pos>2){
         p=p->next;
         pos--;
     }
 
-    struct node*new=malloc(sizeof(struct node));
+    struct node *new=malloc(sizeof(struct node));
+
     new->data=data;
     new->next=p->next;
+
     p->next=new;
 
-    if(p==tail)
+    if(p==tail){
         tail=new;
+    }
 
     return tail;
 }
 
-struct node*del_at_beg(struct node*tail){
-    if(tail==NULL)
+struct node* del_at_beg(struct node *tail){
+    if(tail==NULL){
         return tail;
+    }
 
     if(tail->next==tail){
         free(tail);
         return NULL;
     }
 
-    struct node*temp=tail->next;
+    struct node *temp=tail->next;
+
     tail->next=temp->next;
 
     free(temp);
@@ -112,22 +138,24 @@ struct node*del_at_beg(struct node*tail){
     return tail;
 }
 
-struct node*del_at_end(struct node*tail){
-    if(tail==NULL)
+struct node* del_at_end(struct node *tail){
+    if(tail==NULL){
         return tail;
+    }
 
     if(tail->next==tail){
         free(tail);
         return NULL;
     }
 
-    struct node*temp=tail->next;
+    struct node *temp=tail->next;
 
     while(temp->next!=tail){
         temp=temp->next;
     }
 
     temp->next=tail->next;
+
     free(tail);
 
     tail=temp;
@@ -135,56 +163,65 @@ struct node*del_at_end(struct node*tail){
     return tail;
 }
 
-struct node*del_at_pos(struct node*tail,int pos){
-    if(tail==NULL)
+struct node* del_at_pos(struct node *tail,int pos){
+    if(tail==NULL){
         return tail;
-
-    struct node*temp=tail->next;
+    }
 
     if(tail->next==tail){
         free(tail);
         return NULL;
     }
 
+    struct node *temp=tail->next;
+
     while(pos>2){
         temp=temp->next;
         pos--;
     }
 
-    struct node*temp2=temp->next;
+    struct node *temp2=temp->next;
 
     temp->next=temp2->next;
 
-    if(temp2==tail)
+    if(temp2==tail){
         tail=temp;
+    }
 
     free(temp2);
 
     return tail;
 }
 
-struct node*reverse_list(struct node*tail){
-    if(tail==NULL || tail->next==tail)
+struct node* reverse_list(struct node *tail){
+    if(tail==NULL || tail->next==tail){
         return tail;
+    }
 
-    struct node*head=tail->next;
-    struct node*prev=tail;
-    struct node*curr=head;
-    struct node*next;
+    struct node *head=tail->next;
+    struct node *prev=tail;
+    struct node *curr=head;
+    struct node *next;
 
-    do{
+    while(1){
         next=curr->next;
         curr->next=prev;
+
         prev=curr;
         curr=next;
-    }while(curr!=head);
+
+        if(curr==head){
+            break;
+        }
+    }
 
     tail=head;
 
     return tail;
 }
 
-void print_list(struct node*tail,char *msg){
+void print_list(struct node *tail,char *msg){
+
     printf("\n%s\n",msg);
 
     if(tail==NULL){
@@ -193,12 +230,17 @@ void print_list(struct node*tail,char *msg){
         return;
     }
 
-    struct node*p=tail->next;
+    struct node *p=tail->next;
 
-    do{
+    while(1){
         printf("%d->",p->data);
+
         p=p->next;
-    }while(p!=tail->next);
+
+        if(p==tail->next){
+            break;
+        }
+    }
 
     printf("(head)\n");
 
@@ -207,7 +249,7 @@ void print_list(struct node*tail,char *msg){
 
 int main(){
 
-    struct node*tail=NULL;
+    struct node *tail=NULL;
 
     int n1,data;
 
@@ -215,6 +257,7 @@ int main(){
     scanf("%d",&n1);
 
     for(int i=1;i<=n1;i++){
+
         printf("Enter data:");
         scanf("%d",&data);
 
@@ -229,6 +272,7 @@ int main(){
     scanf("%d",&n2);
 
     for(int i=1;i<=n2;i++){
+
         printf("Enter data:");
         scanf("%d",&data);
 
@@ -243,6 +287,7 @@ int main(){
     scanf("%d",&n3);
 
     for(int i=1;i<=n3;i++){
+
         printf("Enter data:");
         scanf("%d",&data);
 
@@ -266,6 +311,7 @@ int main(){
     scanf("%d",&n4);
 
     for(int i=1;i<=n4;i++){
+
         printf("Enter position:");
         scanf("%d",&pos1);
 
